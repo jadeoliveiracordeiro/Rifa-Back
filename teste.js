@@ -24,7 +24,7 @@ var data = JSON.stringify({
 
 var config = {
   method: 'post',
-  url: 'http://localhost:3000/',
+  url: 'http://localhost:8080/',
   headers: { 
     'Content-Type': 'application/json'
   },

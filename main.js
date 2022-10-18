@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const cors = require('cors')
+const cors = require('cors');
 var bodyParser = require('body-parser')
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -13,7 +13,6 @@ const { Op } = require('sequelize');
 const Customer = require('./models/comprador');
 // parse application/json
 app.use(bodyParser.json())
-
 app.use(cors())
 const port = 8080
 
@@ -21,6 +20,7 @@ app.get('/', async (req, res) => {
     let raffle = await Raffle.findAll();
     res.send(raffle);
 })
+
 app.get('/:idRaffle', async (req, res) => {
     let idRaffle = req.params.idRaffle;
     let raffle = await Raffle.findOne({ where: { id: idRaffle }, nest: true, raw: true })
@@ -39,6 +39,7 @@ app.get('/:idRaffle', async (req, res) => {
     raffle.numbers = numbers
     res.status(200).send(raffle);
 })
+
 app.post('/', async (req, res) => {
     try {
         n = 100;
@@ -96,3 +97,24 @@ app.post('/customer/:id/:status', async (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+
+/*
+
+{
+    "idRaffle": 1,
+    "numbers": [ 1,2,3,4],
+    "customer": {
+        "name": "Jade",
+        "phoneNumber":  "75465464"
+    }
+}  
+
+{
+    "name": "RIFA RAS",
+    "responsible": "Jade Oliveita"
+    "dateRun": "2022-10-15",
+    responsibleNumber:"56464654"
+}
+
+*/
