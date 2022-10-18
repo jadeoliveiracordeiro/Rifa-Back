@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 var bodyParser = require('body-parser')
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -12,10 +13,13 @@ const { Op } = require('sequelize');
 const Customer = require('./models/comprador');
 // parse application/json
 app.use(bodyParser.json())
-const port = 3000
 
-app.get('/', (req, res) => {
-    res.send(`Hello World! ${req.query.name}`)
+app.use(cors())
+const port = 8080
+
+app.get('/', async (req, res) => {
+    let raffle = await Raffle.findAll();
+    res.send(raffle);
 })
 app.get('/:idRaffle', async (req, res) => {
     let idRaffle = req.params.idRaffle;
